@@ -36,10 +36,31 @@ const Create = () => {
     }
   };
 
-  const handleOnChangeFile = () => {};
+  const handleOnChangeFile = (e) => {
+    const element = e.target;
+    const file = element.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = function () {
+      setCover(reader.result.toString());
+    };
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newBook = {
+      id: crypto.randomUUID(),
+      title: title,
+      author: author,
+      cover: cover,
+      intro: intro,
+      review: review,
+    };
+
+    //TODO: mandar a registrar el libro
   };
 
   return (
@@ -71,7 +92,9 @@ const Create = () => {
           <div>
             Cover
             <input type="file" name="cover" onChange={handleOnChangeFile} />
-            <div></div>
+            <div>
+              {!!cover ? <img src={cover} width="200" alt="preview" /> : ""}
+            </div>
           </div>
           <div>
             <div>
