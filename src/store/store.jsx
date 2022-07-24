@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+// 1- La definicion del contexto
 const AppContext = createContext({
   items: [],
   createItem: (item) => {},
@@ -7,7 +8,8 @@ const AppContext = createContext({
   updateItem: (item) => {},
 });
 
-const Store = ({ children }) => {
+// 2- En Store manejo la Implementacion de los metodos
+export default function Store({ children }) {
   const [items, setItems] = useState([]);
 
   const createItem = (item) => {
@@ -41,6 +43,9 @@ const Store = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
-};
+}
 
-export default Store;
+// 3- Exporto el hook para poder usarlo en un componente
+export function useAppContext() {
+  return useContext(AppContext);
+}
